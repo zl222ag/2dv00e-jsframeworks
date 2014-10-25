@@ -1,4 +1,4 @@
 window.addEventListener('load', function () {
 	'use strict';
-	alert('angularJS');
+	alert('AngularJS');
 }, false);
