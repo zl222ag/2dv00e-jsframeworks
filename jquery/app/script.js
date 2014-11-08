@@ -24,16 +24,19 @@ var ZAPP = {
 			return;
 		}
 
-		var task = $('<li class="alert"> <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" /></button> <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok" /></button></li>');
+		var task = $('<li class="alert"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok" /></button> <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" /></button> </li>');
 		task.children('.btn-danger').click(ZAPP.remove);
 		task.children('.btn-success').click(ZAPP.done);
-		task.prepend($('<span />').text(a_taskText));
+		task.append($('<span />').text(a_taskText));
 		ZAPP.wrapper.children('ul').append(task);
 	},
 
 	remove: function () {
 		'use strict';
-		$(this).parent().remove();
+		var elem = $(this).parent();
+		if (confirm('Do you want to remove todo with text: "' + elem.children('span').text() + '".')) {
+			elem.remove();
+		}
 	},
 
 	done: function () {
