@@ -10,7 +10,7 @@ var ZAPP = {
 
 		elem = $(this);
 		ZAPP.addTask(elem.val());
-		elem.val("");
+		elem.val('');
 		return false;
 	},
 
@@ -23,6 +23,7 @@ var ZAPP = {
 		if (a_taskText.length < 1) {
 			return;
 		}
+		a_taskText = a_taskText.replace(/\s{2,}/g, ' ');
 
 		var task = $('<li class="alert"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok" /></button> <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" /></button> </li>');
 		task.children('.btn-danger').click(ZAPP.remove);
