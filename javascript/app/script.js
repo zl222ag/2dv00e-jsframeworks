@@ -1,5 +1,6 @@
 var ZAPP = {
-	wrapper: 0,
+	wrapper: null,
+	REGEX_WHITESPACE: /\s{2,}/g,
 
 	keyDown: function (e) {
 		'use strict';
@@ -23,7 +24,7 @@ var ZAPP = {
 		if (a_taskText.length < 1) {
 			return;
 		}
-		a_taskText = a_taskText.replace(/\s{2,}/g, ' ');
+		a_taskText = a_taskText.replace(ZAPP.REGEX_WHITESPACE, ' ');
 
 		task = document.createElement('li');
 		task.className = 'alert';
@@ -51,18 +52,17 @@ var ZAPP = {
 		ZAPP.wrapper.getElementsByTagName('ul')[0].appendChild(task);
 	},
 
-	remove: function () {
+	remove: function (e) {
 		'use strict';
-		//TODO REMOVE FIREFOX FIX!
-		var elem = this.parentElement;
+		var elem = e.currentTarget.parentElement;
 		if (confirm('Do you want to remove todo with text: "' + elem.lastElementChild.firstChild.nodeValue + '".')) {
 			elem.parentElement.removeChild(elem);
 		}
 	},
 
-	done: function () {
+	done: function (e) {
 		'use strict';
-		this.parentElement.classList.toggle('alert-success');
+		e.currentTarget.parentElement.classList.toggle('alert-success');
 	}
 };
 

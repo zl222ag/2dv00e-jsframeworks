@@ -11,11 +11,11 @@ var TodoView = Backbone.View.extend({
 		if (e.keyCode !== this.ENTER_KEY) {
 			return;
 		}
+		e.preventDefault();
 
 		elem = $(e.target);
 		this.addTask(elem.val());
 		elem.val('');
-		return false;
 	},
 
 	addTask: function (a_taskText) {
@@ -35,15 +35,15 @@ var TodoView = Backbone.View.extend({
 
 	remove: function (e) {
 		'use strict';
-		var elem = $(e.target).parent();
-		if (confirm('Do you want to remove todo with text: "' + elem.children('span').text() + '".')) {
+		var elem = $(e.currentTarget).parent();
+		if (confirm('Do you want to remove todo with text: "' + elem.children().last().text() + '".')) {
 			elem.remove();
 		}
 	},
 
 	done: function (e) {
 		'use strict';
-		$(e.target).parent().toggleClass('alert-success');
+		$(e.currentTarget).parent().toggleClass('alert-success');
 	},
 
 	events: {
