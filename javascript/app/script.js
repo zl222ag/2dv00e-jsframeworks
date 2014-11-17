@@ -45,7 +45,9 @@ var ZAPP = {
 		buttonSuccess.addEventListener('click', ZAPP.done, false);
 
 		task.appendChild(buttonSuccess);
+		task.appendChild(document.createTextNode(' '));
 		task.appendChild(buttonRemove);
+		task.appendChild(document.createTextNode(' '));
 
 		task.appendChild(document.createElement('span'));
 		task.lastElementChild.appendChild(document.createTextNode(a_taskText));
