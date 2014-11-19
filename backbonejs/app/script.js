@@ -2,7 +2,7 @@ var TodoView = Backbone.View.extend({
 	ENTER_KEY: 13,
 	ESCAPE_KEY: 27,
 	REGEX_WHITESPACE: /\s{2,}/g,
-	LIST_TEMPLATE: _.template('<li class="alert"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok" /></button> <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" /></button> <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit" /></button> <span><%- text %></span></li>'),
+	LIST_TEMPLATE: _.template('<li class="alert"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok" /></button> <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" /></button> <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit" /></button> <span><%- text %></span></li>'),
 	wrapper: null,
 	el: 'body',
 
