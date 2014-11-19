@@ -1,4 +1,3 @@
-window.addEventListener('load', function () {
-	'use strict';
-	alert('AngularJS');
-}, false);
+var app = angular.module('todo', []).config(function () {
+	
+});
