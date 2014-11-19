@@ -20,7 +20,7 @@ var ZAPP = {
 		if (typeof a_taskText !== 'string') {
 			return;
 		}
-		a_taskText = a_taskText.trim();
+		a_taskText = $.trim(a_taskText);
 		if (a_taskText.length < 1) {
 			return;
 		}
