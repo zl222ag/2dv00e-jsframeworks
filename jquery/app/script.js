@@ -1,11 +1,19 @@
 var ZAPP = {
-	wrapper: null,
+	ENTER_KEY: 13,
+	ESCAPE_KEY: 27,
 	REGEX_WHITESPACE: /\s{2,}/g,
+
+	wrapper: null,
 
 	keyDown: function (e) {
 		'use strict';
 		var elem = null;
-		if (e.keyCode !== 13) {
+
+		if (e.keyCode === ZAPP.ESCAPE_KEY) {
+			$('.alert-warning').removeClass('alert-warning');
+			return;
+		}
+		if (e.keyCode !== ZAPP.ENTER_KEY) {
 			return;
 		}
 		e.preventDefault();
@@ -17,6 +25,7 @@ var ZAPP = {
 
 	addTask: function (a_taskText) {
 		'use strict';
+		var task = null, editing = null;
 		if (typeof a_taskText !== 'string') {
 			return;
 		}
@@ -26,11 +35,18 @@ var ZAPP = {
 		}
 		a_taskText = a_taskText.replace(ZAPP.REGEX_WHITESPACE, ' ');
 
-		var task = $('<li class="alert"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok" /></button> <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" /></button> <span /></li>');
-		task.children().last().text(a_taskText);
-		task.children('.btn-danger').click(ZAPP.remove);
-		task.children('.btn-success').click(ZAPP.done);
-		ZAPP.wrapper.children('ul').append(task);
+		editing = $('.alert-warning');
+
+		if (editing.length < 1) {
+			task = $('<li class="alert"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok" /></button> <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" /></button> <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit" /></button> <span /></li>');
+			task.children().last().text(a_taskText);
+			task.children('.btn-danger').click(ZAPP.remove);
+			task.children('.btn-success').click(ZAPP.done);
+			task.children('.btn-warning').click(ZAPP.edit);
+			ZAPP.wrapper.children('ul').append(task);
+		} else {
+			editing.removeClass('alert-warning').children('span').text(a_taskText);
+		}
 	},
 
 	remove: function (e) {
@@ -39,11 +55,19 @@ var ZAPP = {
 		if (confirm('Do you want to remove todo with text: "' + elem.children().last().text() + '".')) {
 			elem.remove();
 		}
+		$('textarea').focus();
 	},
 
 	done: function (e) {
 		'use strict';
 		$(e.currentTarget).parent().toggleClass('alert-success');
+		$('textarea').focus();
+	},
+
+	edit: function (e) {
+		'use strict';
+		$('.alert-warning').removeClass('alert-warning');
+		ZAPP.wrapper.children('textarea').focus().val($(e.currentTarget).parent().addClass('alert-warning').children('span').text());
 	}
 };
 

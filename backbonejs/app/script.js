@@ -3,6 +3,7 @@ var TodoView = Backbone.View.extend({
 	ESCAPE_KEY: 27,
 	REGEX_WHITESPACE: /\s{2,}/g,
 	LIST_TEMPLATE: _.template('<li class="alert"><button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok" /></button> <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" /></button> <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit" /></button> <span><%- text %></span></li>'),
+
 	wrapper: null,
 	el: 'body',
 
@@ -26,6 +27,7 @@ var TodoView = Backbone.View.extend({
 
 	addTask: function (a_taskText) {
 		'use strict';
+		var task = null, editing = null;
 		if (typeof a_taskText !== 'string') {
 			return;
 		}
@@ -35,11 +37,13 @@ var TodoView = Backbone.View.extend({
 		}
 		a_taskText = a_taskText.replace(this.REGEX_WHITESPACE, ' ');
 
-		if ($('.alert-warning').length < 1) {
-			var task = this.LIST_TEMPLATE({text: a_taskText});
+		editing = $('.alert-warning');
+
+		if (editing.length < 1) {
+			task = this.LIST_TEMPLATE({text: a_taskText});
 			this.wrapper.children('ul').append(task);
 		} else {
-			$('.alert-warning').removeClass('alert-warning').children('span').text(a_taskText);
+			editing.removeClass('alert-warning').children('span').text(a_taskText);
 		}
 	},
 
@@ -49,23 +53,25 @@ var TodoView = Backbone.View.extend({
 		if (confirm('Do you want to remove todo with text: "' + elem.children().last().text() + '".')) {
 			elem.remove();
 		}
+		$('textarea').focus();
 	},
 
 	done: function (e) {
 		'use strict';
 		$(e.currentTarget).parent().toggleClass('alert-success');
+		$('textarea').focus();
 	},
 
 	edit: function (e) {
 		'use strict';
 		$('.alert-warning').removeClass('alert-warning');
-		this.wrapper.children('textarea').val($(e.currentTarget).parent().addClass('alert-warning').children('span').text());
+		this.wrapper.children('textarea').focus().val($(e.currentTarget).parent().addClass('alert-warning').children('span').text());
 	},
 
 	events: {
 		'keydown textarea': 'keyDown',
 		'click .btn-danger': 'remove',
-		'click .btn-default': 'edit',
+		'click .btn-warning': 'edit',
 		'click .btn-success': 'done'
 	},
 
