@@ -3,8 +3,8 @@
 
 JavaScript frameworks for course 2DV00E
 
-4 to-do applications are going to be made:
-+ Raw JavaScript
+~~4~~ 3 to-do applications are going to be made:
++ "Plain" JavaScript
 + Using framework jQuery.
 + Using framework Backbone.js.
-+ Using framework AngularJS.
++ ~~Using framework AngularJS.~~
